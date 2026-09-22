@@ -37,7 +37,7 @@ from functools import wraps
 from flask import g, jsonify, request
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from db import execute, query_one
+from backend.db import execute, query_one
 
 SESSION_COOKIE_NAME = "session_token"
 SESSION_DURATION = timedelta(days=30)

@@ -22,16 +22,16 @@ from dotenv import load_dotenv
 from flask import Flask, redirect, send_from_directory
 from flask_cors import CORS
 
-import db
-from routes.auth_api import auth_api
-from routes.chats_api import chats_api
+from backend import db
+from backend.routes.auth_api import auth_api
+from backend.routes.chats_api import chats_api
 
 # Carrega o arquivo .env (equivalente a `import "dotenv/config"` no
 # src/server.ts original). Precisa vir antes de qualquer os.environ.get().
 load_dotenv()
 
 BACKEND_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BACKEND_DIR, "..", "frontend")
+FRONTEND_DIR = os.path.join(BACKEND_DIR, "..", "public")
 
 
 def create_app(database_url=None):

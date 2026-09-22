@@ -15,7 +15,7 @@ import os
 from google import genai
 from google.genai import types
 
-from personalities import DEFAULT_PERSONALITY, get_personality_prompt
+from backend.personalities import DEFAULT_PERSONALITY, get_personality_prompt
 
 TEMPERATURE = 0.7
 MAX_OUTPUT_TOKENS = 1024
