@@ -175,6 +175,11 @@ window.Socializacao = (function () {
     menu.style.maxHeight = Math.max(80, down ? below : above) + 'px';
     menu.inert = false;
     menu.classList.add('open');
+    // Keep the menu inside the viewport when its trigger sits beside the model.
+    menu.style.translate = '0px 0';
+    var menuRect = menu.getBoundingClientRect();
+    var shift = Math.max(0, 8 - menuRect.left) - Math.max(0, menuRect.right - (window.innerWidth - 8));
+    menu.style.translate = shift + 'px 0';
     menu.querySelector('div:not([hidden]) > button:not(:disabled)').focus();
     document.addEventListener('click', outsideMenu);
     window.addEventListener('resize', closeMenu);

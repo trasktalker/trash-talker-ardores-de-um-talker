@@ -1,5 +1,5 @@
 /* Only beta feature presentation lives here; the flag controls whether it exists. */
-.composer-actions { border-top: 1px solid var(--border); margin-top: 0.25rem; padding-top: 0.5rem; }
+.composer-actions { border-top: 1px solid var(--border); margin-top: 0.125rem; padding-top: 0.25rem; }
 .social-tools { margin-left: auto; flex: 0 0 auto; }
 .composer .social-tools + button[type="submit"] { margin-left: 0; }
 .social-actions-menu { left: auto; right: 0; }
@@ -16,8 +16,24 @@
 .modal textarea { width: 100%; resize: vertical; max-height: 35dvh; }
 .topbar { flex-wrap: wrap; }
 @media (max-width: 639px) {
-  .composer-actions #personality-picker { flex: 1 1 calc(100% - 52px); }
+  .composer-actions { flex-wrap: nowrap; gap: 0.25rem; }
+  .composer-actions #personality-picker { flex: 0 0 auto; }
   .composer-actions #personality-picker > .personality-picker-trigger { max-width: 100%; }
+  .composer-actions .personality-picker-trigger { padding-inline: 0.25rem; }
+  .composer-actions .social-tools { margin-left: 0; }
+  .composer .social-tools + button[type="submit"] { margin-left: auto; }
+  .composer-actions:has(.is-stop) { display: grid; grid-template-columns: auto minmax(0, 1fr); }
+  .composer-actions:has(.is-stop) #personality-picker { grid-area: 1 / 1; }
+  .composer-actions:has(.is-stop) .social-tools { grid-area: 1 / 2; justify-self: start; }
+  .composer-actions:has(.is-stop) .voice-controls { grid-area: 2 / 1; }
+  .composer-actions:has(.is-stop) button[type="submit"] { grid-area: 2 / 2; justify-self: end; }
   .social-badge { margin-left: 0; }
   .social-badge a { font-size: 14px; }
+}
+@media (max-width: 359px) {
+  .composer-actions { display: grid; grid-template-columns: auto minmax(0, 1fr); }
+  .composer-actions #personality-picker { grid-area: 1 / 1; }
+  .composer-actions .social-tools { grid-area: 1 / 2; justify-self: start; }
+  .composer-actions .voice-controls { grid-area: 2 / 1; }
+  .composer-actions button[type="submit"] { grid-area: 2 / 2; justify-self: end; }
 }

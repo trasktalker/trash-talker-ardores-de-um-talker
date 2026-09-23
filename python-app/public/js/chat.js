@@ -110,7 +110,9 @@ function wireComposer(formId, inputId, submitId, onSubmit) {
   form.addEventListener("submit", onSubmit);
 }
 function resizeComposerInput(input) {
-  input.style.height = "auto"; input.style.height = Math.min(180, input.scrollHeight) + "px";
+  input.style.height = "auto";
+  var maxHeight = parseFloat(getComputedStyle(input).maxHeight) || Infinity;
+  input.style.height = Math.min(maxHeight, input.scrollHeight) + "px";
 }
 function buildMessageBubble(role, content, personality) {
   var bubble = document.createElement("div"), avatar = document.createElement("div"), text = document.createElement("div");

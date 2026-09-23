@@ -127,14 +127,18 @@ function initPersonalityPicker(rootEl, groups, onChange) {
   // Gatilho mostra o que está escolhido em todos os grupos, na ordem em
   // que aparecem no menu: "MathIAs/Talker".
   function atualizarGatilho() {
-    var partes = [];
+    triggerLabel.replaceChildren();
     groups.forEach(function (g) {
       var escolhida = g.options.filter(function (o) {
         return o.id === g.selected;
       })[0];
-      if (escolhida) partes.push(escolhida.name);
+      if (escolhida) {
+        var part = document.createElement("span");
+        part.className = g.key === "effort" ? "picker-effort" : "picker-personality";
+        part.textContent = (triggerLabel.childNodes.length ? "/" : "") + escolhida.name;
+        triggerLabel.appendChild(part);
+      }
     });
-    triggerLabel.textContent = partes.join("/");
   }
 
   function setSelected(groupKey, id) {
