@@ -17,24 +17,64 @@ function wireDeleteAccountButton() {
   if (!deleteBtn) return;
 
   deleteBtn.addEventListener("click", function () {
+    var accountPassword = "";
+    var confirmation = "";
+    var requiredPhrase = "eu quero excluir essa conta";
+
+    function showFinalConfirmation() {
+      showConfirmModal({
+        title: "Tem certeza que quer excluir essa conta?",
+        message: "Essa ação não pode ser desfeita. Sua conta e todas as conversas serão apagadas.",
+        confirmText: "Excluir definitivamente",
+        confirmLoadingText: "Excluindo...",
+        danger: true,
+        onClose: function () { accountPassword = ""; confirmation = ""; },
+        onConfirm: function () {
+          return apiFetch("/api/account/delete", {
+            method: "POST",
+            body: { password: accountPassword, confirmation: confirmation },
+          }).then(function () {
+            accountPassword = "";
+            var cleanup = emitTT("account-deleted", {});
+            emitTT("logout");
+            window.location.href = cleanup.cleanupFailed ? "/?limpeza-local=erro" : "/";
+          }).catch(function (err) {
+            throw new Error(err.message + " Para corrigir os dados, cancele e inicie a exclusão novamente.");
+          });
+        },
+      });
+    }
+
+    function showPhraseConfirmation() {
+      showConfirmModal({
+        title: "Confirme a frase — etapa 2 de 3",
+        message: 'Digite exatamente: "' + requiredPhrase + '"',
+        inputValue: "",
+        confirmText: "Continuar",
+        onConfirm: function (value) {
+          if (value !== requiredPhrase) return Promise.reject(new Error("Digite a frase exatamente como indicada."));
+          confirmation = value;
+        },
+        onClose: function () {
+          if (confirmation) showFinalConfirmation();
+          else accountPassword = "";
+        },
+      });
+    }
+
     showConfirmModal({
-      title: "Excluir conta",
+      title: "Excluir conta — etapa 1 de 3",
       message:
         "Essa ação não pode ser desfeita e todas as suas conversas serão " +
         "apagadas. Digite sua senha para confirmar.",
-      confirmText: "Excluir conta",
-      confirmLoadingText: "Excluindo...",
+      confirmText: "Continuar",
       danger: true,
       password: true,
       onConfirm: function (password) {
-        return apiFetch("/api/account/delete", {
-          method: "POST",
-          body: { password: password },
-        }).then(function () {
-          var cleanup = emitTT("account-deleted", {});
-          emitTT("logout");
-          window.location.href = cleanup.cleanupFailed ? "/?limpeza-local=erro" : "/";
-        });
+        accountPassword = password;
+      },
+      onClose: function () {
+        if (accountPassword) showPhraseConfirmation();
       },
     });
   });

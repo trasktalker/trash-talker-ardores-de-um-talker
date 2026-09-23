@@ -177,7 +177,7 @@ def test_exportacao_nao_inclui_dados_de_outro_usuario(cliente, aplicacao, usuari
 
 
 def test_excluir_conta_com_senha_errada_devolve_401(cliente, usuario_logado):
-    resposta = cliente.post("/api/account/delete", json={"password": "senha-errada-aqui"})
+    resposta = cliente.post("/api/account/delete", json={"password": "senha-errada-aqui", "confirmation": "eu quero excluir essa conta"})
     assert resposta.status_code == 401
     assert db.query_one("SELECT id FROM users") is not None
 
@@ -185,7 +185,7 @@ def test_excluir_conta_com_senha_errada_devolve_401(cliente, usuario_logado):
 def test_excluir_conta_remove_tudo_em_cascata(cliente, conversa, ia_falsa):
     cliente.post(f"/api/chats/{conversa}/messages", json={"content": "oi"})
 
-    resposta = cliente.post("/api/account/delete", json={"password": SENHA_PADRAO})
+    resposta = cliente.post("/api/account/delete", json={"password": SENHA_PADRAO, "confirmation": "eu quero excluir essa conta"})
     assert resposta.status_code == 200
 
     assert db.query("SELECT * FROM users") == []
@@ -195,5 +195,13 @@ def test_excluir_conta_remove_tudo_em_cascata(cliente, conversa, ia_falsa):
 
 
 def test_apos_excluir_conta_a_sessao_deixa_de_valer(cliente, usuario_logado):
-    cliente.post("/api/account/delete", json={"password": SENHA_PADRAO})
+    cliente.post("/api/account/delete", json={"password": SENHA_PADRAO, "confirmation": "eu quero excluir essa conta"})
     assert cliente.get("/api/me").status_code == 401
+
+
+def test_excluir_conta_exige_frase_exata(cliente, usuario_logado):
+    for confirmation in (None, "", "excluir", "Eu quero excluir essa conta"):
+        resposta = cliente.post("/api/account/delete", json={"password": SENHA_PADRAO, "confirmation": confirmation})
+        assert resposta.status_code == 400
+        assert db.query_one("SELECT id FROM users") is not None
+        assert cliente.get("/api/me").status_code == 200

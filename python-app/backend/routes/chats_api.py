@@ -499,6 +499,9 @@ def delete_account():
     if not full_user or not verify_password(password, full_user["password_hash"]):
         return jsonify({"error": "Senha incorreta"}), 401
 
+    if body.get("confirmation") != "eu quero excluir essa conta":
+        return jsonify({"error": "Digite exatamente: eu quero excluir essa conta"}), 400
+
     execute("DELETE FROM users WHERE id = %s", (g.user["id"],))
     response = jsonify({"ok": True})
     return clear_session_cookie(response)
