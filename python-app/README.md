@@ -298,3 +298,5 @@ O que ainda falta:
    revelação gradual do texto já existem, mas são só de fachada: o
    backend ainda espera a resposta inteira do Gemini antes de devolver
    qualquer coisa.
+
+git remote set-url origin https://github.com/trasktalker/trash-talker-ardores-de-um-talker.git
