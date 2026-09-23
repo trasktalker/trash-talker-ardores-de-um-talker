@@ -2,7 +2,6 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
     "app.py": {
-<<<<<<< HEAD
       "maxDuration": 60,
       "excludeFiles": "{tests/**,features/**,docs/**,tools/**}"
     }
@@ -14,11 +13,6 @@
       "permanent": false
     }
   ],
-=======
-      "maxDuration": 60
-    }
-  },
->>>>>>> f3a7f78f261c00dc57bbcd3f42b14743653635f0
   "rewrites": [
     {
       "source": "/login",
@@ -37,7 +31,6 @@
       "destination": "/reset-password.html"
     },
     {
-<<<<<<< HEAD
       "source": "/privacy",
       "destination": "/privacy.html"
     },
@@ -46,8 +39,6 @@
       "destination": "/terms.html"
     },
     {
-=======
->>>>>>> f3a7f78f261c00dc57bbcd3f42b14743653635f0
       "source": "/dashboard",
       "destination": "/dashboard.html"
     },
@@ -64,8 +55,4 @@
       "destination": "/chat.html"
     }
   ]
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f3a7f78f261c00dc57bbcd3f42b14743653635f0
