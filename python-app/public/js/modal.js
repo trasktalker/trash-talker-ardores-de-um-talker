@@ -65,6 +65,9 @@ function showConfirmModal(options) {
     passwordInput.setAttribute("aria-label", options.password ? "Senha" : options.title);
     if (!options.password) passwordInput.value = options.inputValue;
     modal.appendChild(passwordInput);
+    if (options.password && typeof wirePasswordVisibility === "function") {
+      wirePasswordVisibility(modal);
+    }
   }
 
   if (options.renderContent) options.renderContent(modal);

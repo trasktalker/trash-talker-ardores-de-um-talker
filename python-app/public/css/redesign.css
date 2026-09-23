@@ -183,6 +183,12 @@ html.dark .hero-art .hero-art-dark { display: block; }
 .field-row { flex-wrap: wrap; gap: 0.4rem; }
 .field { min-width: 0; gap: 0.5rem; }
 .field input, .field textarea, .modal-input { width: 100%; min-width: 0; min-height: 48px; border: 1px solid var(--input); border-radius: 0.6rem; padding: 0.75rem 0.85rem; background: var(--card); }
+.password-input-wrap { position: relative; width: 100%; min-width: 0; }
+.password-input-wrap > input { width: 100%; padding-right: 3.25rem; }
+.password-visibility-toggle { position: absolute; top: 50%; right: 0.15rem; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 0.5rem; background: transparent; color: var(--muted-foreground); transform: translateY(-50%); }
+.password-visibility-toggle:hover { background: var(--accent); color: var(--foreground); }
+.password-visibility-toggle:focus-visible { outline-offset: -2px; }
+.password-visibility-toggle svg { width: 20px; height: 20px; }
 .field label { font-size: 0.875rem; font-weight: 600; line-height: 1.4; }
 .field-hint, .password-requirements li { font-size: 0.875rem; }
 .auth-legal { max-width: 440px; font-size: 0.875rem; line-height: 1.55; }
