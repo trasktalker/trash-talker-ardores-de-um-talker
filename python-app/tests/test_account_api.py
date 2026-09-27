@@ -7,7 +7,7 @@ direitos prometidos na Política de Privacidade do projeto, então valem
 teste de comportamento, não só de status HTTP.
 """
 
-import db
+from backend import db
 from conftest import SENHA_PADRAO, cadastrar, logar
 
 

@@ -25,6 +25,7 @@ from flask_cors import CORS
 from backend import db
 from backend.routes.auth_api import auth_api
 from backend.routes.chats_api import chats_api
+from backend.routes.two_factor_api import two_factor_api
 
 # Carrega o arquivo .env (equivalente a `import "dotenv/config"` no
 # src/server.ts original). Precisa vir antes de qualquer os.environ.get().
@@ -59,6 +60,7 @@ def create_app(database_url=None):
 
     app.register_blueprint(auth_api)
     app.register_blueprint(chats_api)
+    app.register_blueprint(two_factor_api)
 
     # --- Rotas "de página": servem o HTML estático correspondente para
     # cada URL antiga do projeto Express, para manter os mesmos links

@@ -74,3 +74,31 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_chats_user_id ON chats(user_id);
 CREATE INDEX IF NOT EXISTS idx_messages_chat_id ON messages(chat_id);
+
+-- 2FA opcional. Segredos ativos e pendentes são criptografados com uma
+-- chave externa ao banco. Ausência de secret_encrypted significa desativado.
+CREATE TABLE IF NOT EXISTS user_two_factor (
+    user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    secret_encrypted TEXT,
+    pending_secret_encrypted TEXT,
+    pending_expires_at TIMESTAMPTZ,
+    pending_session_hash TEXT,
+    pending_password_version TEXT,
+    last_used_step BIGINT NOT NULL DEFAULT -1,
+    failed_attempts INTEGER NOT NULL DEFAULT 0,
+    failure_window_at TIMESTAMPTZ,
+    blocked_until TIMESTAMPTZ
+);
+
+CREATE TABLE IF NOT EXISTS two_factor_login_challenges (
+    token_hash TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+    password_version TEXT NOT NULL,
+    expires_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS two_factor_recovery_codes (
+    user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    code_hash TEXT NOT NULL,
+    PRIMARY KEY (user_id, code_hash)
+);

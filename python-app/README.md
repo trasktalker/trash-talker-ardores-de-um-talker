@@ -1,5 +1,7 @@
 # Trash Talker — versão Python + HTML/CSS/JS puro
 
+Autenticação em dois fatores: [configuração do Google Authenticator, migração e testes](docs/2fa.md).
+
 Esta pasta (`python-app/`) é uma reescrita completa do projeto **Trash
 Talker**, originalmente em TypeScript (Express + EJS + better-auth),
 usando apenas:

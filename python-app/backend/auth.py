@@ -85,17 +85,16 @@ def get_password_requirement_failures(password):
     return failures
 
 
-def create_session(user_id):
+def create_session(user_id, cursor=None):
     """
     Cria uma nova sessão para o usuário e devolve o token (que vai para o
     cookie). Equivalente ao que o better-auth fazia internamente ao logar.
     """
     token = secrets.token_urlsafe(32)
     expires_at = datetime.now(timezone.utc) + SESSION_DURATION
-    execute(
-        "INSERT INTO sessions (id, user_id, expires_at) VALUES (%s, %s, %s)",
-        (token, user_id, expires_at),
-    )
+    run = cursor.execute if cursor is not None else execute
+    run("INSERT INTO sessions (id, user_id, expires_at) VALUES (%s, %s, %s)",
+        (token, user_id, expires_at))
     return token, expires_at
 
 
@@ -153,7 +152,7 @@ def get_session_user(req):
 
 def set_session_cookie(response, token, expires_at):
     """Anexa o cookie de sessão em uma resposta Flask."""
-    is_production = os.environ.get("FLASK_ENV") == "production"
+    is_production = os.environ.get("FLASK_ENV") == "production" or os.environ.get("VERCEL") == "1"
     response.set_cookie(
         SESSION_COOKIE_NAME,
         token,

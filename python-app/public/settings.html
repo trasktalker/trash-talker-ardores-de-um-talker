@@ -140,6 +140,69 @@
             </form>
           </div>
 
+          <section class="card" id="two-factor-card" aria-labelledby="two-factor-title">
+            <h2 id="two-factor-title">Autenticação em dois fatores</h2>
+            <p class="muted">Proteja sua conta com um código do Google Authenticator ao entrar.</p>
+            <p id="two-factor-status" role="status">Consultando proteção da conta...</p>
+            <div id="two-factor-error" class="banner banner-error" role="alert" hidden></div>
+            <button type="button" id="two-factor-retry" class="btn-outline" hidden>Tentar novamente</button>
+
+            <div id="two-factor-actions" class="card-actions" hidden>
+              <button type="button" id="two-factor-start" class="btn-primary">Ativar autenticação em dois fatores</button>
+              <button type="button" id="two-factor-regenerate" class="btn-outline" hidden>Gerar novos códigos de recuperação</button>
+              <button type="button" id="two-factor-disable" class="btn-destructive" hidden>Desativar autenticação em dois fatores</button>
+            </div>
+
+            <form id="two-factor-password-form" class="auth-form two-factor-panel" hidden>
+              <h3 id="two-factor-action-title" tabindex="-1">Confirme sua senha</h3>
+              <p id="two-factor-action-help" class="muted"></p>
+              <div class="field">
+                <label for="two-factor-password">Senha atual</label>
+                <input id="two-factor-password" type="password" autocomplete="current-password" maxlength="1024" required />
+              </div>
+              <div class="field" id="two-factor-reauth-field" hidden>
+                <label for="two-factor-reauth-code">Código do autenticador ou de recuperação</label>
+                <input id="two-factor-reauth-code" type="text" autocomplete="one-time-code" maxlength="64" />
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn-primary" id="two-factor-action-submit">Continuar</button>
+                <button type="button" class="btn-outline" data-two-factor-cancel>Cancelar</button>
+              </div>
+            </form>
+
+            <div id="two-factor-enrollment" class="two-factor-panel" hidden>
+              <ol>
+                <li>No Google Authenticator, toque em + e escolha Ler QR code.</li>
+                <li>Escaneie o QR Code abaixo ou escolha Inserir chave de configuração e use a chave manual, com base no tempo.</li>
+                <li>Digite o código de 6 dígitos para concluir a ativação.</li>
+              </ol>
+              <img id="two-factor-qr" class="two-factor-qr" alt="QR Code para adicionar sua conta ao Google Authenticator" width="240" height="240" />
+              <p>Chave manual: <code id="two-factor-manual-key" class="two-factor-key"></code></p>
+              <p class="muted">Esta configuração expira em 10 minutos. Mantenha a chave e o QR Code em segredo.</p>
+              <form id="two-factor-confirm-form" class="auth-form">
+                <div class="field">
+                  <label for="two-factor-confirm-code">Código do Google Authenticator</label>
+                  <input id="two-factor-confirm-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required />
+                </div>
+                <div class="form-actions">
+                  <button type="submit" class="btn-primary">Confirmar ativação</button>
+                  <button type="button" class="btn-outline" data-two-factor-cancel>Cancelar</button>
+                </div>
+              </form>
+            </div>
+
+            <div id="two-factor-recovery" class="two-factor-panel" hidden>
+              <h3 id="two-factor-recovery-title" tabindex="-1">Guarde seus códigos de recuperação</h3>
+              <p>Estes oito códigos são mostrados apenas agora. Guarde-os em um local seguro. Cada um permite entrar uma vez se você perder acesso ao autenticador.</p>
+              <ul id="two-factor-recovery-list" class="two-factor-recovery-list"></ul>
+              <p class="muted">Redefinir a senha por e-mail não remove esta proteção. Sem o autenticador e sem estes códigos, você perde o acesso à conta.</p>
+              <div class="card-actions">
+                <button type="button" class="btn-outline" id="two-factor-download">Baixar códigos</button>
+                <button type="button" class="btn-primary" id="two-factor-done">Já guardei meus códigos</button>
+              </div>
+            </div>
+          </section>
+
           <div class="card">
             <h2>Privacidade e dados</h2>
             <p class="muted">Consulte nossos documentos legais ou exporte uma cópia dos seus dados.</p>
@@ -169,5 +232,6 @@
   <script src="/js/layout.js"></script>
   <script src="/js/chat.js"></script>
   <script src="/js/settings.js"></script>
+  <script src="/js/two-factor.js"></script>
 </body>
 </html>

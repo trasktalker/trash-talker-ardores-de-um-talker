@@ -54,7 +54,7 @@ def init_pool(database_url=None):
     database_url = database_url or os.environ.get("DATABASE_URL")
     if not database_url:
         raise RuntimeError("A variável de ambiente DATABASE_URL não foi definida")
-    _pool = psycopg2.pool.SimpleConnectionPool(1, 10, dsn=database_url)
+    _pool = psycopg2.pool.ThreadedConnectionPool(1, 10, dsn=database_url)
 
 
 def close_pool():

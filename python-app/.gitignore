@@ -22,3 +22,10 @@ yarn-error.log*
 # IDE e Editor
 .vscode/
 .idea/
+
+# Python e banco local descartável de testes
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.test-postgres/

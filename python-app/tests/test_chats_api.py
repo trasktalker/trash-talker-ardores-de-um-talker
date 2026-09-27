@@ -8,7 +8,7 @@ Além do caminho feliz, cobrem dois pontos de risco:
     a mensagem que o usuário já tinha escrito.
 """
 
-import db
+from backend import db
 from conftest import cadastrar, logar
 
 

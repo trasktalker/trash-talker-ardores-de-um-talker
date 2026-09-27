@@ -366,3 +366,12 @@ button, input, textarea, select { font-family: inherit; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
   .lp-step, .lp-feature-card { opacity: 1; transform: none; }
 }
+
+.two-factor-panel { margin-top: 1.25rem; }
+.two-factor-panel ol { padding-left: 1.5rem; }
+.two-factor-panel li { margin-block: 0.5rem; }
+.two-factor-qr { display: block; width: min(240px, 100%); height: auto; padding: 0.5rem; margin-block: 1rem; background: #fff; border-radius: 0.5rem; }
+.two-factor-key { overflow-wrap: anywhere; user-select: all; }
+.two-factor-recovery-list { padding-left: 1.25rem; font-size: 0.85rem; overflow-wrap: anywhere; }
+#two-factor-card .card-actions { flex-wrap: wrap; }
+#two-factor-card .card-actions button { white-space: normal; }

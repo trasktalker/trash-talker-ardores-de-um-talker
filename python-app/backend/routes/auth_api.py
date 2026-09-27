@@ -28,21 +28,26 @@ from backend.auth import (
     clear_session_cookie,
     consume_password_reset_token,
     create_password_reset_token,
-    create_session,
     destroy_all_sessions,
     destroy_session,
     get_password_requirement_failures,
     get_session_user,
     hash_password,
     set_session_cookie,
-    verify_password,
     SESSION_COOKIE_NAME,
 )
 from backend.db import execute, new_id, query_one
+from backend.two_factor import password_login
 
 auth_api = Blueprint("auth_api", __name__, url_prefix="/api")
 
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+
+
+@auth_api.after_request
+def no_store_auth(response):
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 
 def _public_user(user):
@@ -72,20 +77,26 @@ def me():
 @auth_api.route("/login", methods=["POST"])
 def login():
     body = request.get_json(silent=True) or {}
-    email = (body.get("email") or "").strip().lower()
-    password = body.get("password") or ""
+    if not isinstance(body, dict):
+        return jsonify({"error": "Dados inválidos"}), 400
+    email = body.get("email", "")
+    password = body.get("password", "")
+    if not isinstance(email, str) or not isinstance(password, str) or len(password) > 1024 or len(email) > 320:
+        return jsonify({"error": "Dados inválidos"}), 400
+    email = email.strip().lower()
 
     # Validação equivalente ao loginSchema (zod) do original.
     if not EMAIL_RE.match(email) or len(password) < 8:
         return jsonify({"error": "Email ou senha inválidos"}), 400
 
-    user = query_one("SELECT * FROM users WHERE email = %s", (email,))
-    if not user or not verify_password(password, user["password_hash"]):
-        return jsonify({"error": "Email ou senha incorretos"}), 401
-
-    token, expires_at = create_session(user["id"])
-    response = jsonify({"user": _public_user(user)})
-    return set_session_cookie(response, token, expires_at)
+    result = password_login(email, password)
+    if result.get("twoFactorRequired"):
+        destroy_session(request.cookies.get(SESSION_COOKIE_NAME))
+        response = jsonify(result)
+        response.status_code = 202
+        return clear_session_cookie(response)
+    response = jsonify({"user": _public_user(result["user"])})
+    return set_session_cookie(response, *result["session"])
 
 
 @auth_api.route("/signup", methods=["POST"])

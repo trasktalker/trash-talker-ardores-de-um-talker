@@ -6,7 +6,7 @@ redefinição de senha - incluindo os caminhos de erro, que são onde
 moram os riscos de segurança.
 """
 
-import db
+from backend import db
 from conftest import SENHA_PADRAO, cadastrar, logar
 
 

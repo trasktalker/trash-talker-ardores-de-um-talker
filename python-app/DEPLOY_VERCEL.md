@@ -31,6 +31,9 @@ Cadastre em **Settings > Environment Variables** para Preview e Production:
 
 - `DATABASE_URL` — obrigatório; URL de conexão do PostgreSQL.
 - `GEMINI_API_KEY` — necessário para o envio de mensagens à IA.
+- `TOTP_ENCRYPTION_KEY` — chave Fernet persistente para o Google Authenticator.
+  Gere e guarde conforme [docs/2fa.md](docs/2fa.md); todas as instâncias
+  ligadas ao mesmo banco precisam da mesma chave.
 - `FLASK_ENV=production` — habilita o cookie de sessão seguro.
 - `FRONTEND_ORIGIN=https://seu-dominio.vercel.app` — origem pública da
   aplicação; substitua pelo domínio final.
@@ -41,3 +44,8 @@ Se a recuperação de senha for usada em produção, inclua também `SMTP_HOST`,
 Nunca envie um arquivo `.env` ao repositório ou à Vercel. Depois de cadastrar
 as variáveis, faça um deploy de Preview e valide as URLs da tabela antes de
 promover para Production.
+
+Para disponibilizar o 2FA, aplique o `backend/schema.sql` atualizado antes
+de publicar o backend e as telas. Contas existentes continuam sem 2FA até
+a ativação individual nas Configurações. Nunca faça rollback para um login
+sem verificação 2FA depois que houver contas protegidas.

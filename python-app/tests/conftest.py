@@ -33,16 +33,17 @@ import sys
 
 import pytest
 
-BACKEND_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "backend")
-sys.path.insert(0, BACKEND_DIR)
+APP_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BACKEND_DIR = os.path.join(APP_DIR, "backend")
+sys.path.insert(0, APP_DIR)
 
-import ai  # noqa: E402
-import db  # noqa: E402
-from app import create_app  # noqa: E402
+from backend import db  # noqa: E402
+from backend.factory import create_app  # noqa: E402
 
 SCHEMA_PATH = os.path.join(BACKEND_DIR, "schema.sql")
 
-TABELAS = ["messages", "chats", "password_reset_tokens", "sessions", "users"]
+TABELAS = ["messages", "chats", "password_reset_tokens", "sessions",
+           "two_factor_recovery_codes", "two_factor_login_challenges", "user_two_factor", "users"]
 
 SENHA_PADRAO = "Senha-de-Teste-123"
 
@@ -104,6 +105,12 @@ def cliente(aplicacao):
     return aplicacao.test_client()
 
 
+@pytest.fixture(autouse=True)
+def email_simulado(monkeypatch):
+    # Testes nunca enviam e-mails usando as credenciais do ambiente local.
+    monkeypatch.setattr("backend.routes.auth_api.send_password_reset_email", lambda *_args: None)
+
+
 @pytest.fixture
 def ia_falsa(monkeypatch):
     """
@@ -124,7 +131,7 @@ def ia_falsa(monkeypatch):
         )
         return "Resposta simulada do TrashTalker."
 
-    monkeypatch.setattr("routes.chats_api.generate_reply", _falsa)
+    monkeypatch.setattr("backend.routes.chats_api.generate_reply", _falsa)
     return registro
 
 
@@ -135,7 +142,7 @@ def ia_quebrada(monkeypatch):
     def _falha(history, user, personality=None, effort=None):
         raise RuntimeError("Falha simulada da IA")
 
-    monkeypatch.setattr("routes.chats_api.generate_reply", _falha)
+    monkeypatch.setattr("backend.routes.chats_api.generate_reply", _falha)
 
 
 # --------------------------------------------------------------------------
