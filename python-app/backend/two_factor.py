@@ -3,6 +3,7 @@
 import base64
 import hashlib
 import io
+import logging
 import math
 import os
 import re
@@ -14,6 +15,7 @@ import pyotp
 import qrcode
 import qrcode.image.svg
 from cryptography.fernet import Fernet, InvalidToken
+from psycopg2.errors import InsufficientPrivilege
 from psycopg2.extras import RealDictCursor
 
 from backend import db
@@ -78,9 +80,22 @@ def _transaction():
 
 def _state(cursor, user_id):
     # Todos os chamadores bloqueiam primeiro users, na mesma ordem.
-    cursor.execute("INSERT INTO user_two_factor (user_id) VALUES (%s) ON CONFLICT DO NOTHING", (user_id,))
-    cursor.execute("SELECT * FROM user_two_factor WHERE user_id = %s", (user_id,))
-    return cursor.fetchone()
+    try:
+        cursor.execute("INSERT INTO user_two_factor (user_id) VALUES (%s) ON CONFLICT DO NOTHING", (user_id,))
+        cursor.execute("SELECT * FROM user_two_factor WHERE user_id = %s", (user_id,))
+        return cursor.fetchone()
+    except InsufficientPrivilege:
+        # Somente identificadores da conexao; nunca registrar DSN, senha ou dados da conta.
+        # Leitura local do driver: nao consulta uma transacao que ja foi abortada.
+        try:
+            params = cursor.connection.get_dsn_parameters()
+            logging.getLogger(__name__).error(
+                "DB_PERMISSION_DIAGNOSTIC table=user_two_factor user=%r database=%r host=%r",
+                params.get("user"), params.get("dbname"), params.get("host"),
+            )
+        except Exception:
+            logging.getLogger(__name__).error("DB_PERMISSION_DIAGNOSTIC metadata_unavailable")
+        raise
 
 
 def _check_limit(state, now):
