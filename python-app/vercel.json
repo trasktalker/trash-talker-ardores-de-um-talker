@@ -3,9 +3,20 @@
   "functions": {
     "app.py": {
       "maxDuration": 60,
-      "excludeFiles": "{tests/**,features/**,docs/**,tools/**}"
+      "excludeFiles": "{tests/**,features/**,docs/**,tools/**,artifacts/**}"
     }
   },
+  "headers": [
+    {
+      "source": "/(css|js|avatars|images)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/dashboard/information",

@@ -12,9 +12,6 @@ a cada chamada.
 
 import os
 
-from google import genai
-from google.genai import types
-
 from backend.personalities import DEFAULT_PERSONALITY, get_personality_prompt
 
 TEMPERATURE = 0.7
@@ -81,6 +78,8 @@ def get_client():
     não estiver configurada, só a chamada de chat é que falha."""
     global _client
     if _client is None:
+        from google import genai
+        from google.genai import types  # import aqui: o SDK é pesado e só a rota de chat precisa dele (cold start)
         api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
             raise RuntimeError("A variável de ambiente GEMINI_API_KEY não foi definida")
@@ -101,6 +100,7 @@ def _to_gemini_contents(history):
     """Converte o histórico {"role": "user"|"assistant", "content": str} do
     banco para o formato `contents` esperado pela API do Gemini - que usa
     "model" no lugar de "assistant" para as respostas da IA."""
+    from google.genai import types  # import aqui: o SDK é pesado e só a rota de chat precisa dele (cold start)
     contents = []
     for m in history:
         role = "model" if m["role"] == "assistant" else "user"
@@ -171,6 +171,7 @@ def generate_reply(
     qual modelo do Gemini responde.
     Devolve o texto da resposta da IA.
     """
+    from google.genai import types  # import aqui: o SDK é pesado e só a rota de chat precisa dele (cold start)
     system_prompt = get_personality_prompt(personality) + "\n\n" + _build_user_context_section(user)
     model = get_effort_model(effort)
 

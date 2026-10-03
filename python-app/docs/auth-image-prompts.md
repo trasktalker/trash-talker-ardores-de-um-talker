@@ -1,6 +1,6 @@
 # Ilustrações de autenticação
 
-Geradas com a ferramenta integrada de imagens (skill imagegen). PNGs originais com transparência em `frontend/images/auth-login-v1.png` e `frontend/images/auth-signup-v1.png`.
+Geradas com a ferramenta integrada de imagens (skill imagegen). Os PNGs originais (`auth-login-v1.png`, `auth-signup-v1.png`) foram removidos do site por não serem usados; as páginas usam `images/auth-login-icon.svg` e `images/auth-signup-icon.svg`. Os PNGs continuam no histórico do git.
 
 ## Especificação compartilhada
 

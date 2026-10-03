@@ -810,34 +810,6 @@ button {
   padding: 0.95rem 1.1rem;
 }
 
-.typing-dot {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.4;
-  animation: typing-bounce 1.2s infinite ease-in-out;
-}
-
-.typing-dot:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.typing-dot:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
-@keyframes typing-bounce {
-  0%, 60%, 100% {
-    opacity: 0.4;
-    transform: translateY(0);
-  }
-  30% {
-    opacity: 1;
-    transform: translateY(-3px);
-  }
-}
-
 .chat-composer {
   padding: 1.5rem;
   border-top: 1px solid var(--border);
@@ -1183,17 +1155,6 @@ html.dark .auth-card {
   gap: 0.75rem;
 }
 
-.card-danger {
-  border-color: color-mix(in srgb, var(--destructive) 30%, transparent);
-}
-
-.card-danger h2 {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--destructive);
-}
-
 .theme-buttons {
   display: flex;
   gap: 0.5rem;
@@ -1215,17 +1176,6 @@ html.dark .auth-card {
   border-color: var(--primary);
 }
 
-.danger-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border: 1px solid color-mix(in srgb, var(--destructive) 20%, transparent);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  flex-wrap: wrap;
-}
-
 /* Fileira de ações lado a lado dentro de um .card (links/botão peer,
    não um form). */
 .card-actions {
@@ -1234,71 +1184,8 @@ html.dark .auth-card {
   flex-wrap: wrap;
 }
 
-/* --- Information page --- */
-
-.information-page {
-  max-width: 56rem;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.information-page h1 {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.information-page h2 {
-  font-size: 1.4rem;
-  font-weight: 600;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-}
-
 .muted {
   color: var(--muted-foreground);
-}
-
-.personality-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.personality-card {
-  background: var(--card);
-  color: var(--card-foreground);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-.personality-photo {
-  aspect-ratio: 1;
-  background: var(--muted);
-  position: relative;
-}
-
-.personality-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.personality-body {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.tag-row {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
 }
 
 .pill {
@@ -1308,24 +1195,6 @@ html.dark .auth-card {
   font-weight: 600;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
-}
-
-.rules-section {
-  background: color-mix(in srgb, var(--muted) 50%, transparent);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.rules-section ul {
-  margin: 0;
-  padding-left: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .static-page {
@@ -1435,19 +1304,6 @@ html.dark .auth-card {
   z-index: 1;
 }
 
-.lp-badge {
-  display: inline-block;
-  background: color-mix(in srgb, var(--primary) 14%, transparent);
-  color: var(--primary);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 0.35rem 1rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
-  margin-bottom: 1.5rem;
-}
-
 .lp-hero-title {
   font-size: clamp(2.2rem, 5vw, 3.6rem);
   font-weight: 800;
@@ -1461,14 +1317,6 @@ html.dark .auth-card {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.lp-hero-sub {
-  font-size: 1.15rem;
-  color: var(--muted-foreground);
-  max-width: 34rem;
-  margin: 0 auto 2rem;
-  line-height: 1.65;
 }
 
 .lp-hero-actions {
@@ -1510,72 +1358,6 @@ html.dark .auth-card {
   margin-bottom: 0.5rem;
 }
 
-.lp-section-sub {
-  color: var(--muted-foreground);
-  font-size: 1.05rem;
-  margin-bottom: 2.5rem;
-}
-
-/* Features */
-
-.lp-features {
-  padding: 5rem 0;
-  text-align: center;
-}
-
-.lp-features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
-  gap: 1.5rem;
-}
-
-.lp-feature-card {
-  background: var(--card);
-  color: var(--card-foreground);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  padding: 2rem 1.5rem;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-.lp-feature-card.lp-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.lp-feature-card:hover {
-  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
-  box-shadow: 0 8px 32px color-mix(in srgb, var(--primary) 10%, transparent);
-}
-
-.lp-feature-icon {
-  width: 3rem;
-  height: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: color-mix(in srgb, var(--primary) 12%, transparent);
-  border-radius: 0.75rem;
-  color: var(--primary);
-}
-
-.lp-feature-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.lp-feature-card p {
-  color: var(--muted-foreground);
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
-
 /* How it works */
 
 .lp-how {
@@ -1603,11 +1385,6 @@ html.dark .auth-card {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.lp-step.lp-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .lp-step-number {
@@ -1732,12 +1509,6 @@ html.dark .auth-card {
   color: var(--primary);
 }
 
-.lp-footer-copy {
-  font-size: 0.78rem;
-  color: var(--muted-foreground);
-  opacity: 0.7;
-}
-
 /* Responsive for landing */
 
 @media (max-width: 860px) {
@@ -1761,170 +1532,6 @@ html.dark .auth-card {
 @media (max-width: 480px) {
   .lp-hero {
     padding: 3rem 0 2.5rem;
-  }
-}
-
-/* --- Preloader (index.html, login.html, signup.html) ---
-   Um bloco só pros dois temas: usa var(--primary)/var(--background)/
-   var(--muted-foreground), que já mudam sozinhas com html.dark - só os
-   filtros do logo apagado e do brilho (abaixo) precisam de um valor
-   diferente por tema, então esses dois ganham override em html.dark. */
-
-.tt-preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 34px;
-  background: var(--background);
-  opacity: 1;
-  transition: opacity 0.45s ease, visibility 0.45s ease;
-}
-
-/* js/preloader.js adiciona esta classe quando a página termina de carregar. */
-.tt-preloader.is-done {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.tt-preloader::before {
-  content: "";
-  position: absolute;
-  top: -22%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 620px;
-  height: 620px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 14%, transparent) 0%, transparent 68%);
-  pointer-events: none;
-}
-
-.tt-face {
-  position: relative;
-  width: 216px;
-  height: 216px;
-  animation: tt-pop 3.24s ease-out infinite;
-}
-
-.tt-face img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* logo apagado, ao fundo */
-.tt-face .tt-base {
-  filter: grayscale(1) contrast(0.4) opacity(0.24);
-}
-
-html.dark .tt-face .tt-base {
-  filter: grayscale(1) brightness(0.55) opacity(0.3);
-}
-
-/* recorte que "enche" o logo de baixo para cima - a altura do
-   preenchimento é controlada pelo JS (js/preloader.js), a partir do
-   carregamento real da página, não por uma animação de tempo fixo. */
-.tt-fill {
-  position: absolute;
-  inset: 0;
-  clip-path: inset(100% 0 0 0);
-  transition: clip-path 0.3s ease;
-}
-
-/* reflexo diagonal, só dentro da parte já preenchida */
-.tt-face .tt-shine {
-  filter: brightness(1.9) saturate(0.7);
-  -webkit-mask-image: linear-gradient(100deg, transparent 38%, #000 50%, transparent 62%);
-  mask-image: linear-gradient(100deg, transparent 38%, #000 50%, transparent 62%);
-  -webkit-mask-size: 300% 100%;
-  mask-size: 300% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  animation: tt-sweep 1.9s linear infinite;
-}
-
-html.dark .tt-face .tt-shine {
-  filter: brightness(2.2) saturate(0.6);
-}
-
-.tt-meter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  width: 260px;
-}
-
-.tt-track {
-  width: 100%;
-  height: 4px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--primary) 18%, transparent);
-  overflow: hidden;
-}
-
-/* largura da barra também vem do JS (mesmo valor real usado no .tt-fill
-   acima), via transform: scaleX() atualizado a cada recurso carregado. */
-.tt-bar {
-  height: 100%;
-  width: 100%;
-  border-radius: 999px;
-  background: var(--primary);
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-
-.tt-labels {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.tt-labels span:first-child {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
-.tt-pct {
-  font-size: 1.35rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-  color: var(--primary);
-}
-
-@keyframes tt-sweep {
-  0% { -webkit-mask-position: -120% 0; mask-position: -120% 0; }
-  100% { -webkit-mask-position: 220% 0; mask-position: 220% 0; }
-}
-
-@keyframes tt-pop {
-  0%, 82% { transform: scale(1); }
-  90% { transform: scale(1.07); }
-  100% { transform: scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* .tt-fill/.tt-bar não têm animação de loop (são controlados pelo
-     JS a partir do carregamento real) - só as decorações puramente
-     estéticas (baloiço do logo, brilho) somem aqui. */
-  .tt-face,
-  .tt-face .tt-shine {
-    animation: none;
-  }
-  .tt-face .tt-shine {
-    display: none;
   }
 }
 
@@ -2016,16 +1623,6 @@ html.dark .tt-face .tt-shine {
   }
   .modal-actions button {
     width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .tt-face {
-    width: 168px;
-    height: 168px;
-  }
-  .tt-meter {
-    width: 210px;
   }
 }
 

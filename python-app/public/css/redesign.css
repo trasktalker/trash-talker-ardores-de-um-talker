@@ -281,7 +281,7 @@ p { overflow-wrap: anywhere; }
 .static-page { max-width: 68ch; }
 button, input, textarea, select { font-family: inherit; }
 .modal-overlay, .modal { transition-duration: 160ms; }
-.typing-dot, .lp-step, .lp-feature-card { animation: none; opacity: 1; transform: none; }
+.lp-step { animation: none; opacity: 1; transform: none; }
 @media (min-width: 1024px) {
  .auth-aside { display: block; position: absolute; left: max(32px, calc(23% - 200px)); top: 50%; transform: translateY(-50%); width: min(36vw, 400px); }
 }
@@ -364,7 +364,7 @@ button, input, textarea, select { font-family: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
-  .lp-step, .lp-feature-card { opacity: 1; transform: none; }
+  .lp-step { opacity: 1; transform: none; }
 }
 
 .two-factor-panel { margin-top: 1.25rem; }

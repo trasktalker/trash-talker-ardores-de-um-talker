@@ -15,8 +15,8 @@ principal continua sendo a primeira mensagem; o perfil não é obrigatório.
   autenticação, carregamento e favicon. O arquivo original não foi alterado.
 - `frontend/conversation-art.svg`: ilustração vetorial local, sem texto,
   compartilhada pela home e pelo painel de autenticação no tema escuro.
-- `frontend/conversation-art-light.svg`: versão para o painel claro
-  de autenticação, com amarelo da logo, pêssego e traços marrons.
+- `frontend/conversation-art-light.svg`: (removido - não era mais usado
+  por nenhuma página; continua no histórico do git).
 - `frontend/conversation-art-home-light.svg`: variante da home com o
   amarelo exato da logo; a versão escura permanece inalterada.
 - `frontend/js/ui.js`: nomes acessíveis, mensagens de estado e associações

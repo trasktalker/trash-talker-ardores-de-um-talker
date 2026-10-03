@@ -93,6 +93,9 @@ def create_session(user_id, cursor=None):
     token = secrets.token_urlsafe(32)
     expires_at = datetime.now(timezone.utc) + SESSION_DURATION
     run = cursor.execute if cursor is not None else execute
+    # Faxina das sessões vencidas a cada login, sem precisar de cron.
+    # ponytail: varredura da tabela inteira; criar índice em expires_at se ela crescer muito.
+    run("DELETE FROM sessions WHERE expires_at < now()")
     run("INSERT INTO sessions (id, user_id, expires_at) VALUES (%s, %s, %s)",
         (token, user_id, expires_at))
     return token, expires_at
@@ -196,6 +199,7 @@ def create_password_reset_token(user_id):
     """Gera um token de redefinição de senha válido por 1 hora."""
     token = secrets.token_urlsafe(32)
     expires_at = datetime.now(timezone.utc) + RESET_TOKEN_DURATION
+    execute("DELETE FROM password_reset_tokens WHERE expires_at < now()")
     execute(
         "INSERT INTO password_reset_tokens (token, user_id, expires_at) "
         "VALUES (%s, %s, %s)",
